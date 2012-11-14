@@ -57,13 +57,23 @@ jQuery(function() {
     ]
   });
 
-  // This should be properly scoped
-  page = Page({
-    listing: shopping,
-    preview: potatoes
-  })
+  var orphansUrl = "http://localhost:3000/orphans.js?callback=?";
 
-  ko.applyBindings(page);
+  jQuery.getJSON(orphansUrl, function(response) {
+    var thing = Thing({name: response.name});
+
+    $(response.children).each(function(index, value) {
+      thing.children.push(Thing(value));
+    });
+
+    page = Page({
+      listing: thing,
+      preview: thing
+    })
+
+    ko.applyBindings(page);
+  });
+
 
 });
 
