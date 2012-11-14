@@ -8,6 +8,11 @@
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.1.0/knockout-min.js"></script>
     <script src="scripts/main.js"></script>
+    <style>
+      #children li:hover {
+        background-color: #EEE;
+      }
+    </style>
   </head>
   <body>
     <div class="container-fluid">
@@ -49,7 +54,7 @@
             <a href="#">Shopping</a>
           </p>
 
-          <ol class="unstyled" data-bind="foreach: listing().children">
+          <ol class="unstyled" data-bind="foreach: listing().children" id="children">
             <li data-bind="click: selectThing">
               <h4>
                 <input type="checkbox" />
