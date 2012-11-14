@@ -28,7 +28,9 @@
         <form class="form-search">
           <div class="input-append">
             <input type="text" class="input-large search-query">
-            <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
+            <button type="submit" class="btn btn-primary">
+              <i class="icon-search icon-white"></i>
+            </button>
           </div>
         </form>
         <hr />
@@ -38,7 +40,7 @@
 
         <div class="span6">
 
-          <h2 data-bind="text: name">Thing name</h2>
+          <h2 data-bind="text: listing().name">Listing name</h2>
 
           <p>
             <a href="#">Orphans</a> &gt;
@@ -47,13 +49,13 @@
             <a href="#">Shopping</a>
           </p>
 
-          <ol class="unstyled" data-bind="foreach: children">
-            <li>
+          <ol class="unstyled" data-bind="foreach: listing().children">
+            <li data-bind="click: selectThing">
               <h4>
                 <input type="checkbox" />
-                <span data-bind="text: name">Thing name</span>
+                <span data-bind="text: name">Child name</span>
                 <span class="badge pull-right">
-                  <span data-bind="text: children().length">Children length</span>
+                  <span data-bind="text: children().length">Child's children length</span>
                   <i class="icon-plus-sign icon-white"></i>
                 </span>
               </h4>
@@ -64,7 +66,7 @@
                   <ul class="unstyled pull-right" data-bind="foreach: parents">
                     <li class="pull-left">
                       <small>
-                        <a href="#" data-bind="text: name">Parent name</a>
+                        <a href="#" data-bind="text: name">Child's parent name</a>
                       </small>
                       &nbsp;
                     </li>
@@ -76,10 +78,12 @@
 
         <div class="row-fluid">
           <div class="span12">
-            <div class="input-append">
-              <input class="span11" id="appendedInputButton" type="text">
-              <button class="btn btn-primary" type="button"><i class="icon-plus icon-white"></i></button>
-            </div>
+            <form data-bind="submit: addThing">
+              <div class="input-append">
+                <input class="span11" id="new-thing-name" type="text">
+                <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i></button>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -103,44 +107,40 @@
             </div>
           </div>
 
-          <h3>Bread</h3>
+          <h3 data-bind="text: preview().name">Preview name</h3>
 
           <div class="row-fluid">
-            <div class="span12">
-              <span class="label">Foo  &nbsp; <i class="icon-remove-circle icon-white"></i></span>
-              <span class="label">Bar  &nbsp; <i class="icon-remove-circle icon-white"></i></span>
-              <span class="label">Baz  &nbsp; <i class="icon-remove-circle icon-white"></i></span>
-              <span class="label">So   &nbsp; <i class="icon-remove-circle icon-white"></i></span>
-              <span class="label">Desu &nbsp; <i class="icon-remove-circle icon-white"></i></span>
-              <span class="label">Ne   &nbsp; <i class="icon-remove-circle icon-white"></i></span>
+            <div class="span12" data-bind="foreach: preview().parents">
+              <span class="label">
+                <span data-bind="text: name">Parent name</span>
+                &nbsp;
+                <i class="icon-remove-circle icon-white"></i>
+              </span>
             </div>
           </div>
 
           <p class="visible-phone">&nbsp;</p>
 
-          <div class="well">
-            <p>Fusce gravida, odio vel tristique viverra, lectus mi placerat massa, ut dictum orci tellus non elit. Sed sagittis felis in tellus pellentesque placerat. Nunc eu diam ante. Cras ac ipsum arcu, nec pulvinar urna. Etiam tincidunt vehicula malesuada. Etiam sit amet ultricies libero. Vestibulum et mattis lectus. Praesent a pretium turpis. Quisque in velit leo, a laoreet neque. Phasellus ac odio nisl, quis elementum est. Duis dignissim tortor ut urna vulputate bibendum. In malesuada lorem ut nunc ultricies sagittis et et leo.</p>
-            <p>Suspendisse tincidunt placerat sodales. Mauris nec enim eget nunc consequat dapibus. Integer molestie, purus in lobortis ultrices, orci lorem lobortis dui, quis pulvinar est tellus eget leo. Sed et arcu non purus pulvinar sodales eget pulvinar velit. Integer malesuada porttitor iaculis. Sed risus quam, malesuada et rhoncus ut, rutrum vel risus. Phasellus nisi mauris, semper faucibus venenatis nec, bibendum ut lacus. Phasellus porttitor, magna a aliquam rutrum, elit dui viverra elit, non lacinia nisi risus et mi.</p>
-          </div>
-
-          <div class="well">
-            <p>Nam ut euismod mauris. Nulla facilisi. Morbi nisl dui, laoreet at varius ut, porttitor id quam. Mauris non mauris at lacus elementum ornare. In accumsan metus in nibh tempus sit amet lobortis nibh auctor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras lectus nibh, pulvinar vitae fringilla et, luctus non urna. Sed et nisi quis tellus dictum malesuada non nec sapien. Nulla facilisi. In hac habitasse platea dictumst. Nulla facilisi.</p>
+          <div data-bind="foreach: preview().contents">
+            <div class="well" data-bind="html: text">
+              Preview contents text
+            </div>
           </div>
 
           <form>
-          <div class="btn-toolbar">
-            <div class="btn-group">
-              <button class="btn btn-small"><strong>B</strong></button>
-              <button class="btn btn-small"><em>I</em></button>
-              <button class="btn btn-small"><u>U</u></button>
-            </div>
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <button class="btn btn-small"><strong>B</strong></button>
+                <button class="btn btn-small"><em>I</em></button>
+                <button class="btn btn-small"><u>U</u></button>
+              </div>
 
-            <div class="btn-group">
-              <button class="btn btn-small"><i class="icon-list"></i></button>
-              <button class="btn btn-small"><i class="icon-indent-left"></i></button>
-              <button class="btn btn-small"><i class="icon-indent-right"></i></button>
+              <div class="btn-group">
+                <button class="btn btn-small"><i class="icon-list"></i></button>
+                <button class="btn btn-small"><i class="icon-indent-left"></i></button>
+                <button class="btn btn-small"><i class="icon-indent-right"></i></button>
+              </div>
             </div>
-          </div>
 
             <textarea rows="3" class="span12"></textarea>
             <button type="submit" class="btn btn-primary pull-right">Add content</button>
