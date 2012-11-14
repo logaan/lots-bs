@@ -20,6 +20,10 @@ function Page(page) {
       });
 
       this.listing().children.push(thing);
+      thing.selectThing();
+
+      $("#new-thing-name", form).val("");
+      $("#new-thing-name", form).focus();
     },
     addContent: function(content) {
       this.content().preview.contents.push(content);
