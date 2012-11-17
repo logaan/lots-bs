@@ -1,10 +1,28 @@
 function Thing(thing) {
   return {
+    id:       ko.observable(thing.id),
     name:     ko.observable(thing.name),
     parents:  ko.observableArray(thing.parents  || []),
     children: ko.observableArray(thing.children || []),
     contents: ko.observableArray(thing.contents || []),
-    selectThing: function(model, event) {
+    open: function(model, event) {
+      var thingUrl = "http://localhost:3000/things/" + model.id() + "?callback=?";
+
+      jQuery.getJSON(thingUrl, function(response) {
+        // This stuff should be made recursive and moved out into a function
+        var thing = Thing({name: response.name});
+
+        $(response.children).each(function(index, value) {
+          thing.children.push(Thing(value));
+        });
+
+        page.listing(thing);
+        page.preview(thing);
+      });
+    },
+    select: function(model, event) {
+      // Perhaps this should be a css or style binding to a selected flag.
+      // Makes some sense I guess. You could have multiple things selected.
       $("#children .selected").removeClass("selected");
       $(event.currentTarget).addClass("selected");
       page.preview(model);
@@ -22,7 +40,7 @@ function Page(page) {
       });
 
       this.listing().children.push(thing);
-      thing.selectThing();
+      thing.select();
 
       $("#new-thing-name", form).val("");
       $("#new-thing-name", form).focus();
