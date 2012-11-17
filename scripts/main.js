@@ -6,7 +6,7 @@ function Thing(thing) {
     children: ko.observableArray(thing.children || []),
     contents: ko.observableArray(thing.contents || []),
     open: function(model, event) {
-      var thingUrl = "http://localhost:3000/things/" + model.id() + "?callback=?";
+      var thingUrl = "http://localhost:3000/thing/" + model.id() + "?callback=?";
 
       jQuery.getJSON(thingUrl, function(response) {
         // This stuff should be made recursive and moved out into a function
