@@ -4,8 +4,10 @@ function Thing(thing) {
     parents:  ko.observableArray(thing.parents  || []),
     children: ko.observableArray(thing.children || []),
     contents: ko.observableArray(thing.contents || []),
-    selectThing: function() {
-      page.preview(this);
+    selectThing: function(model, event) {
+      $("#children .selected").removeClass("selected");
+      $(event.currentTarget).addClass("selected");
+      page.preview(model);
     },
   };
 };
